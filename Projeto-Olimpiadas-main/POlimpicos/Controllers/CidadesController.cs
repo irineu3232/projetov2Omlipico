@@ -10,6 +10,7 @@ namespace POlimpicos.Controllers
         private readonly Database db = new Database();
         public IActionResult Index()
         {
+
             return View();
         }
 

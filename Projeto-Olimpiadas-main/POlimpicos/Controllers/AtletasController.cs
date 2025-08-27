@@ -9,9 +9,46 @@ namespace POlimpicos.Controllers
     public class AtletasController : Controller
     {
         private readonly Database db = new Database();
+
         public IActionResult Index()
         {
-            return View();
+            var lista = new List<Atletas>();
+
+            using (var conn = db.GetConnection())
+            using (var cmd = new MySqlCommand(@"
+                        Select Distinct
+                        a.codAtleta, a.nomeAtleta, a.dataNascimento, a.sexo, a.altura, a.peso, a.codCidade, c.nomeCidade as CidadeNascimento, e.nomeEstado as EstadoNascimento, 
+                        m.nomeModalidade as modalidade
+                        From Atletas a
+                        Inner Join resultadosatletas r on a.codAtleta = r.codAtleta
+                        Inner Join provas p on r.codProva = p.codProva
+                        Inner Join modalidades m on p.codModalidade = m.codModalidade
+                        Left Join cidades c on a.codCidade = c.codCidade
+                        Left Join estados e on c.codEstado = e.codEstado
+                        Order by a.nomeAtleta;", conn
+                    ))
+            using (var rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    lista.Add(new Atletas
+                    {
+                        codAtleta = rd.GetInt32("codAtleta"),
+                        nomeAtleta = rd["nomeAtleta"] as string,
+                        dataNascimento = rd["dataNascimento"] as string,
+                        sexo = rd.IsDBNull(rd.GetOrdinal("sexo")) ? (char?)null : rd.GetChar("sexo"),
+                        altura = rd.IsDBNull(rd.GetOrdinal("altura")) ? (decimal?)null : rd.GetDecimal("altura"),
+                        peso = rd.IsDBNull(rd.GetOrdinal("peso")) ? (decimal?)null : rd.GetDecimal("peso"),
+                        codCidade = rd.IsDBNull(rd.GetOrdinal("codCidade")) ? (int?)null : rd.GetInt32("codCidade"),
+                        CidadeNascimento = rd["CidadeNascimento"] as string,
+                        modalidade = rd["modalidade"] as string
+
+
+                    });
+                }
+            }
+
+            return View(lista);
         }
 
         public IActionResult Criar()

@@ -10,8 +10,34 @@ namespace POlimpicos.Controllers
         private readonly Database db = new Database();
         public IActionResult Index()
         {
-            return View();
+            var lista = new List<Estado>();
+
+            using (var conn = db.GetConnection())
+            using (var cmd = new MySqlCommand(@"
+                        Select Distinct
+                        e.codEstado, e.nomeEstado
+                        From Estados e
+                        Inner Join Cidades c on c.codEstado = e.codEstado
+                        Inner Join Atletas a on c.codCidade = a.codCidade
+                        Order by e.nomeEstado;", conn
+                    ))
+            using (var rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    lista.Add(new Estado
+                    {
+                        codEstado = rd.GetInt32("codEstado"),
+                        nomeEstado = rd["nomeEstado"] as string
+
+                    });
+                }
+            }
+
+            return View(lista);
         }
+
+       
 
         public IActionResult Cadastrar()
         {

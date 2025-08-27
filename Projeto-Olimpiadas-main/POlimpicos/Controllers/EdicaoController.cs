@@ -175,6 +175,8 @@ namespace POlimpicos.Controllers
                             reader.IsDBNull(reader.GetOrdinal("medalha"))
                                 ? null
                                 : reader.GetString(reader.GetOrdinal("medalha"))
+
+                          
                         ));
                     }
 

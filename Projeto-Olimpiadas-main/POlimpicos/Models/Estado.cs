@@ -7,5 +7,7 @@
 
         public string? nomeEstado { get; set; }
 
+        public Cidade codCidade { get; set; }
+
     }
 }
