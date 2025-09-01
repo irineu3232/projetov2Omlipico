@@ -4,7 +4,7 @@ namespace POlimpicos.Data
 {
     public class Database
     {
-        private readonly string connectionString = "server=localhost;port=3306;database=bdOlimpicos;user=root;password=12345678;";
+        private readonly string connectionString = "server=localhost;port=3306;database=bdOlimpicos;user=root;password=@irineuJ32323;";
 
         public MySqlConnection GetConnection()
         {
