@@ -1,1 +1,78 @@
-﻿<a href="/Provas/cadastrar">Cadastrar nova prova</a>
+﻿@model IEnumerable<POlimpicos.Models.Provas>
+
+@{
+    ViewBag.Title = "Provas";
+    int page = ViewBag.Page ?? 1;
+    int pageSize = ViewBag.PageSize ?? 50;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    string q = ViewBag.Query as string ?? "";
+}
+
+<div class="d-flex justify-content-between align-items-end mb-3">
+    <h1 class="page-title">Cidades</h1>
+    <form method="get" class="d-flex gap-2">
+
+        <input class="form-control" type="search" name="q" value="@q" placeholder="Busque a prova ou a modalidade..." />
+        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+    </form>
+</div>
+
+<div class="table-wrap card-soft">
+    <table class="table table-houver align-middle mb-0">
+        <thead>
+            <tr>
+                <th style="width:100px;">Código</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr><td colspan="3" class="text-center text-muted py-4"> Nenhum Registro</td></tr>
+            }
+            else
+            {
+                foreach (var c in Model)
+                {
+                    <tr>
+                        <td>@c.codProva</td>
+                        <td>
+                            <a asp-controller="Provas" asp-action="Atletas" asp-route-id="@c.codProva">
+                                @c.nomeProva
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@if (totalPages > 1)
+{
+    <nav class="mt-3">
+        <ul class="pagination">
+            <li class="page-item @(page >1 ? "" : "disabled")">
+                <a asp-route-pageSize="@pageSize" asp-route-q="@q">Anterior </a>
+            </li>
+
+            @for (int p = 1; p <= totalPages; p++)
+            {
+                <li class="page-item @(p == page ? "active" : "")">
+                    <a class="page-link" asp-route-page="@p" asp-route-pageSize="@pageSize" asp-route-q="@q">@p</a>
+                </li>
+            }
+
+            <li class="page-item @(page < totalPages ? "" : "disabled")">
+                <a class="page-link" asp-route-page="@(page+1)" asp-route-pageSize="@pageSize"
+                   asp-route-q="@q">Próxima</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+
+
+<a href="/Provas/cadastrar">Cadastrar nova prova</a>
