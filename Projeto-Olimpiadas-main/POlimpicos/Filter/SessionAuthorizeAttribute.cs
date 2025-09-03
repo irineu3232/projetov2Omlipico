@@ -136,5 +136,14 @@ namespace POlimpicos.Filter
             base.OnActionExecuting(context);
 
         }
+
+        private bool IsAjaxRequest(HttpContext http)
+        {
+            throw new NotImplementedException();
+        }
+
+        private class AllowAnonymousSessionAttribute
+        {
+        }
     }
 }
