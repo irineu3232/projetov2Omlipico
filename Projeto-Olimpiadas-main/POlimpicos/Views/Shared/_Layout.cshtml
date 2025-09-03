@@ -43,7 +43,7 @@
 
                         <span>Bem-vindo, @Context.Session.GetString("Username")!</span>
 
-                        <li class="nav-item"><a class="nav-link" asp-controller="AdminController" asp-action="Logout">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="Logout">Logout</a></li>
 
                     }
 
@@ -53,13 +53,13 @@
 
                         <!-- Usuário não logado -->
 
-                        <li class="nav-item"><a class="nav-link" asp-controller="AdminController" asp-action="Login">Login</a></li>
+                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="Login">Login</a></li>
 
                     }
 
                     <li class="nav-item dropdown">
 
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Cadastros</a>
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Páginas</a>
 
                         <ul class="dropdown-menu">
 
@@ -71,11 +71,11 @@
 
                             <li><a class="dropdown-item" asp-controller="Cidades" asp-action="Index">Cidades</a></li>
 
-                            <li><a class="dropdown-item" asp-controller="Atletas" asp-action="Index">Cadastrar Atleta</a></li>
+                            <li><a class="dropdown-item" asp-controller="Atletas" asp-action="Index"> Atleta</a></li>
 
-                            <li><a class="dropdown-item" asp-controller="ResultadosAtletas" asp-action="Index">Cadastrar Resultados</a></li>
+                            <li><a class="dropdown-item" asp-controller="ResultadosAtletas" asp-action="Index">Resultados</a></li>
 
-                            <li><a class="dropdown-item" asp-controller="Edicao" asp-action="Cadastrar">Cadastrar Edição</a></li>
+                            <li><a class="dropdown-item" asp-controller="Edicao" asp-action="Index"> Edição</a></li>
 
                         </ul>
 

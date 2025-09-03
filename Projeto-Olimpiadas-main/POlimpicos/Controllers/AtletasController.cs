@@ -137,7 +137,7 @@ namespace POlimpicos.Controllers
             return View(lista);
         }
 
-
+/* Forma alternativa usando outras duas views
         public IActionResult IndexEst(int? id)
         {
             var lista = new List<Atletas>();
@@ -248,7 +248,7 @@ namespace POlimpicos.Controllers
         }
 
 
-
+        */
 
 
 
